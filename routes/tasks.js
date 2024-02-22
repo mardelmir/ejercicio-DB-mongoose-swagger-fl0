@@ -21,9 +21,14 @@ router.post("/create", async (req, res) => {
 router.get("/", async (req, res) => {
     try {
         const tasks = await Task.find();
-        res.send(tasks);
+        res
+            .status(200)
+            .send({ message: "All tasks successfully retrieved", tasks });
     } catch (error) {
         console.error(error);
+        res
+            .status(500)
+            .send({ message: "There was a problem trying to retrieve all tasks" });
     }
 })
 
@@ -31,7 +36,9 @@ router.get("/", async (req, res) => {
 router.get("/id/:_id", async (req, res) => {
     try {
         const task = await Task.findById(req.params._id);
-        res.send(task);
+        res
+            .status(200)
+            .send({ message: "Task successfully retrieved", task });
     } catch (error) {
         console.error(error);
         res
@@ -60,6 +67,9 @@ router.put("/id/:_id", async (req, res) => {
         res.send({ message: "Task successfully updated", task });
     } catch (error) {
         console.error(error);
+        res
+            .status(500)
+            .send({ message: "There was a problem trying to update the task with _id: " + req.params._id });
     }
 })
 
@@ -67,7 +77,7 @@ router.put("/id/:_id", async (req, res) => {
 router.delete("/id/:_id", async (req, res) => {
     try {
         const task = await Task.findByIdAndDelete(req.params._id);
-        res.send({ message: "Task deleted", task });
+        res.send({ message: "Task successfully deleted", task });
     } catch (error) {
         console.error(error);
         res
