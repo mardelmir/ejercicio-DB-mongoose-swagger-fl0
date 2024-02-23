@@ -17,7 +17,7 @@ module.exports = {
                     completed: {
                         type: "boolean",
                         description: "Indicates if the task has been completed (true) or not (false)",
-                        example: "true"
+                        example: "false"
                     },
                     createdAt: {
                         type: "date",
@@ -33,6 +33,21 @@ module.exports = {
                         type: "number",
                         description: "Specifies the version of the document",
                         example: "2024-02-14T09:31:35.086+00:00"
+                    }
+                }
+            },
+            TaskInput: {
+                type: "object",
+                properties: {
+                    title: {
+                        type: "string",
+                        description: "Title for the task",
+                        example: "Task 1"
+                    },
+                    completed: {
+                        type: "boolean",
+                        description: "Indicates if the task has been completed (true) or not (false)",
+                        example: "false"
                     }
                 }
             }

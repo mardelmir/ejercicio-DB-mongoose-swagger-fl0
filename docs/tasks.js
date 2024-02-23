@@ -8,11 +8,10 @@ module.exports = {
                 operationId: "createTask",
                 parameters: [],
                 requestBody: {
+                    required: true,
                     content: {
                         "application/json": {
-                            schema: {
-                                $ref: "#/components/schemas/Task"
-                            }
+                            schema: { $ref: "#/components/schemas/TaskInput" }
                         }
                     }
                 },
@@ -30,7 +29,14 @@ module.exports = {
                 operationId: "getAllTasks",
                 parameters: [],
                 responses: {
-                    200: { description: "All tasks successfully retrieved" },
+                    200: {
+                        description: "All tasks successfully retrieved",
+                        content: {
+                            "application/json": {
+                                schema: { $ref: "#/components/schemas/Task" }
+                            }
+                        }
+                    },
                     500: { description: "There was a problem trying to retrieve all tasks" }
                 }
 
@@ -75,14 +81,16 @@ module.exports = {
                     }
                 ],
                 requestBody: {
+                    required: true,
                     content: {
                         "application/json": {
-                            schema: { $ref: "#/components/schemas/Task" }
+                            schema: { $ref: "#/components/schemas/TaskInput" }
                         }
                     }
                 },
                 responses: {
                     200: { description: "Task successfully updated" },
+                    404: { description: "Task not found!" },
                     500: { description: "There was a problem trying to update the task with _id" }
                 }
             },
@@ -107,28 +115,28 @@ module.exports = {
                 }
             }
         },
-        "/markAsCompleted/{_id}":{
+        "/markAsCompleted/{_id}": {
             put: {
-                tags: {Tasks: ": update status"},
+                tags: { Tasks: ": update status" },
                 summary: "Mark task as completed",
                 summary: "Update task from completed: false to completed: true",
                 operationId: "taskCompleted",
                 parameters: [
-                  {
-                    name: "_id",
-                    in: "path",
-                    required: true,
-                    schema: {
-                      type: "string"
+                    {
+                        name: "_id",
+                        in: "path",
+                        required: true,
+                        schema: {
+                            type: "string"
+                        },
+                        description: "Id of task to be updated and marked as completed",
                     },
-                    description: "Id of task to be updated and marked as completed",
-                  },
                 ],
                 responses: {
-                  200: { description: "Task successfully updated" },
-                  500: { description: "There was a problem trying to update the task with _id" },
+                    200: { description: "Task successfully updated" },
+                    500: { description: "There was a problem trying to update the task with _id" },
                 },
-              }, 
+            },
         }
     }
 }
